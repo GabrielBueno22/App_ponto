@@ -1,0 +1,13 @@
+{
+    "tf_user": "Usuário",
+    "tf_pwd" : "Senha",
+    "bt_login" : "Entrar",
+
+    "error_user_empty" : "Digite seu usuário",
+    "error_user_short" : "Usuário deve conter ao menos 3 caracteres",
+    "error_user_wrong_email" : "Digite um e-mail válido",
+    "error_user_wrong_cpf" : "Digite um CPF válido",
+    "error_pwd_empty" : "Digite sua senha"
+
+
+}
