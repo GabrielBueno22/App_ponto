@@ -47,68 +47,70 @@ class _TabBarScreenState extends State<TabBarScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                    child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                            onTap: () {
-                              _onItemTapped(0);
-                            },
-                            child: Icon(
-                              Icons.calendar_today,
-                              color: Colors.white,
-                            )))),
-                Text(
-                  "Ponto",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                )
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                    child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
+            Container(
+                child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
                       onTap: () {
-                        _onItemTapped(1);
+                        _onItemTapped(0);
                       },
-                      child: Icon(
-                        Icons.receipt,
-                        color: Colors.white,
-                      )),
-                )),
-                Text(
-                  "Relatórios",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                )
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                    child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                            onTap: () {
-                              _onItemTapped(2);
-                            },
-                            child: Icon(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(
+                            Icons.calendar_today,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Ponto",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          )
+                        ],
+                      ),
+                    ))),
+            Container(
+                child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                        onTap: () {
+                          _onItemTapped(1);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Icon(
+                              Icons.receipt,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "Relatórios",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            )
+                          ],
+                        )))),
+            Container(
+                child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                        onTap: () {
+                          _onItemTapped(2);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Icon(
                               Icons.more_horiz,
                               color: Colors.white,
-                            )))),
-                Text(
-                  "Menu",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                )
-              ],
-            )
+                            ),
+                            Text(
+                              "Menu",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            )
+                          ],
+                        ))))
           ],
         ),
       ),

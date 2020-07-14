@@ -56,6 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Text(
             "ON SUITE",
             style: TextStyle(
+                fontFamily: "BalooDa2",
                 fontSize: MediaQuery.of(context).size.width * 0.1,
                 color: Colors.white),
           )

@@ -46,6 +46,9 @@ class _JustificarFaltaScreenState extends State<JustificarFaltaScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
               Container(
                 margin: EdgeInsets.only(left: 15, right: 5),
                 child: TextFormField(

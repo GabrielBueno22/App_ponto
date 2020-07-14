@@ -43,12 +43,14 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.center,
+              end: Alignment.bottomCenter,
               colors: [
                 const Color(0xFFfa7d09),
                 const Color(0xFFff4301),
-              ], // whitish to gray
-              tileMode: TileMode.mirror // repeats the gradient over the canvas
+                Colors.white
+              ],
+              tileMode: TileMode
+                  .repeated // whitish to gray// repeats the gradient over the canvas
               ),
         ),
         child: Column(children: <Widget>[
@@ -291,7 +293,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                   if (controller.pontosDia.length > 0) {
                     return Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      height: MediaQuery.of(context).size.height * 0.545,
+                      height: MediaQuery.of(context).size.height * 0.528,
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -379,7 +381,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                     );
                   } else {
                     return Container(
-                        height: MediaQuery.of(context).size.height * 0.545,
+                        height: MediaQuery.of(context).size.height * 0.528,
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -402,7 +404,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                   if (controller.pontosMes.length > 0) {
                     return Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      height: MediaQuery.of(context).size.height * 0.545,
+                      height: MediaQuery.of(context).size.height * 0.528,
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -490,7 +492,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                     );
                   } else {
                     return Container(
-                        height: MediaQuery.of(context).size.height * 0.545,
+                        height: MediaQuery.of(context).size.height * 0.528,
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -16,8 +16,8 @@ class PontoController = _PontoControllerBase with _$PontoController;
 abstract class _PontoControllerBase with Store {
   Completer<GoogleMapController> controllerMap = Completer();
   Completer<GoogleMapController> controllerMapVisita = Completer();
-
-  Geolocator geolocator = Geolocator();
+  @observable
+  double distance = 0;
 
   var location = new Location();
   @observable
@@ -43,6 +43,9 @@ abstract class _PontoControllerBase with Store {
           target: LatLng(userLocation.latitude, userLocation.longitude),
           zoom: 18.00)));
     });
+    distance = await Geolocator().distanceBetween(userLocation.latitude,
+        userLocation.longitude, -24.7841366, -49.9969496);
+    print("Sua distância para a empresa é:" + distance.toString());
   }
 
   Future<void> initializeLocationVisita(BuildContext context) async {
@@ -80,13 +83,12 @@ abstract class _PontoControllerBase with Store {
         fillColor: Colors.blue.withAlpha(70));
   }
 
-  compareLocation() async {
-    //List<double> loc = await DataManager.instance.getLocation();
-    double result = await Geolocator().distanceBetween(userLocation.latitude,
-        userLocation.longitude, -24.7841366, -49.9969496);
-    if (result > 10000) {
+  @computed
+  bool get distanciaEmpresa {
+    if (distance > 100000) {
       return false;
+    } else {
+      return true;
     }
-    return true;
   }
 }

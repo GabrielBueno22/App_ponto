@@ -9,6 +9,29 @@ part of 'ponto_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PontoController on _PontoControllerBase, Store {
+  Computed<bool> _$distanciaEmpresaComputed;
+
+  @override
+  bool get distanciaEmpresa => (_$distanciaEmpresaComputed ??= Computed<bool>(
+          () => super.distanciaEmpresa,
+          name: '_PontoControllerBase.distanciaEmpresa'))
+      .value;
+
+  final _$distanceAtom = Atom(name: '_PontoControllerBase.distance');
+
+  @override
+  double get distance {
+    _$distanceAtom.reportRead();
+    return super.distance;
+  }
+
+  @override
+  set distance(double value) {
+    _$distanceAtom.reportWrite(value, super.distance, () {
+      super.distance = value;
+    });
+  }
+
   final _$markerAtom = Atom(name: '_PontoControllerBase.marker');
 
   @override
@@ -42,8 +65,10 @@ mixin _$PontoController on _PontoControllerBase, Store {
   @override
   String toString() {
     return '''
+distance: ${distance},
 marker: ${marker},
-circle: ${circle}
+circle: ${circle},
+distanciaEmpresa: ${distanciaEmpresa}
     ''';
   }
 }

@@ -35,12 +35,8 @@ class _PontoScreenState extends State<PontoScreen> {
     controller.location = Location();
     controller.userLocation = null;
     controller.marker = null;
-    controller.initializeLocation(context).then((value) => locationC());
+    controller.initializeLocation(context);
     super.initState();
-  }
-
-  Future<void> locationC() async {
-    location = await controller.compareLocation();
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -71,7 +67,7 @@ class _PontoScreenState extends State<PontoScreen> {
           );
         }),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.81,
+          top: MediaQuery.of(context).size.height * 0.75,
           right: MediaQuery.of(context).size.width * 0.25,
           child: Container(
             padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -80,7 +76,6 @@ class _PontoScreenState extends State<PontoScreen> {
                 color: const Color(0xFFfa7d09)),
             child: FlatButton(
                 onPressed: () {
-                  locationC();
                   widget.ponto.id == null
                       ? showAlertDialog(context)
                       : showDialogSucces(context);
@@ -139,7 +134,7 @@ class _PontoScreenState extends State<PontoScreen> {
       },
     );
     //configura o AlertDialog
-    AlertDialog alert = location
+    AlertDialog alert = controller.distanciaEmpresa
         ? AlertDialog(
             title: Text("Ponto"),
             content: Text("Deseja registrar sua entrada?"),
@@ -207,7 +202,7 @@ class _PontoScreenState extends State<PontoScreen> {
     );
     //configura o AlertDialog
     String motivo;
-    AlertDialog alert = location
+    AlertDialog alert = controller.distanciaEmpresa
         ? AlertDialog(
             title: Text("Ponto"),
             content: Container(

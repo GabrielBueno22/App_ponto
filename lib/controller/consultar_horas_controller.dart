@@ -135,6 +135,8 @@ abstract class _ConsultarHorasControllerBase with Store {
     return hs + ":" + ms;
   }
 
+  saldo() {}
+
   @computed
   bool get isDia {
     if (dSM == "Dia") {

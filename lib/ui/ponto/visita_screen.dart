@@ -61,7 +61,7 @@ class _VisitaScreenState extends State<VisitaScreen> {
           );
         }),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.81,
+          top: MediaQuery.of(context).size.height * 0.75,
           right: MediaQuery.of(context).size.width * 0.2,
           child: Container(
             padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -113,28 +113,31 @@ class _VisitaScreenState extends State<VisitaScreen> {
     //configura o AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Visita"),
-      content: Container(
-        height: MediaQuery.of(context).size.height * 0.25,
-        child: Column(
-          children: <Widget>[
-            Text("Deseja registrar sua visita nesse endereço?"),
-            WidgetTextForm(
-                value: "",
-                text: "Cliente",
-                icon: null,
-                onChanged: null,
-                enabled: true,
-                numero: false,
-                error: null),
-            WidgetTextForm(
-                value: "",
-                text: "Motivo da visita",
-                icon: null,
-                onChanged: null,
-                enabled: true,
-                numero: false,
-                error: null),
-          ],
+      content: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.3,
+          width: MediaQuery.of(context).size.height * 0.7,
+          child: Column(
+            children: <Widget>[
+              Text("Deseja registrar sua visita nesse endereço?"),
+              WidgetTextForm(
+                  value: "",
+                  text: "Cliente",
+                  icon: null,
+                  onChanged: null,
+                  enabled: true,
+                  numero: false,
+                  error: null),
+              WidgetTextForm(
+                  value: "",
+                  text: "Motivo da visita",
+                  icon: null,
+                  onChanged: null,
+                  enabled: true,
+                  numero: false,
+                  error: null),
+            ],
+          ),
         ),
       ),
       elevation: 10,
