@@ -39,3 +39,26 @@ class LoginTokenDB {
     return '''DROP TABLE $tableName''';
   }
 }
+
+class PontoDB {
+  static String tableName = 'ponto';
+  static String id = '_id';
+  static String id_funcionario = 'id_funcionario';
+  static String entrada = 'entrada';
+  static String saida = 'saida';
+  static String fim = 'fim';
+
+  static String createTable() {
+    return '''CREATE TABLE $tableName (
+                $id INTEGER PRIMARY KEY AUTOINCREMENT,
+                $id_funcionario INTEGER NOT NULL,
+                $entrada TEXT NOT NULL,
+                $saida TEXT,
+                $fim INTEGER NOT NULL
+              )''';
+  }
+
+  static String dropTable() {
+    return '''DROP TABLE $tableName''';
+  }
+}

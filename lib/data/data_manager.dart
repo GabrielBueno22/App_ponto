@@ -1,15 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'local/database.dart';
 import 'local/database_helper.dart';
 import 'model/login.dart';
 import 'model/login_token.dart';
+import 'model/Ponto.dart';
 import 'network/api_base_helper.dart';
 
 class DataManager {
   ApiBaseHelper _apiBaseHelper = ApiBaseHelper.instance;
   DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  final prefs = SharedPreferences.getInstance();
 
   // Singleton
   DataManager._privateConstructor();
@@ -121,6 +124,83 @@ class DataManager {
     int id = await db.delete(LoginTokenDB.tableName);
     return id;
   }
-  // END LOGIN TOKEN
 
+  //LOCATION
+
+  setLocation(double lat, double long) {
+    prefs.then((value) {
+      value.setDouble("lat", lat);
+      value.setDouble("long", long);
+    });
+  }
+
+  Future<List<double>> getLocation() async {
+    List<double> valueList = List();
+    prefs.then((value) {
+      valueList.add(value.getDouble("lat"));
+      valueList.add(value.getDouble("long"));
+      return valueList;
+    });
+  }
+
+  //PONTO
+
+  Future<int> insertPonto(Ponto ponto) async {
+    Database db = await _databaseHelper.database;
+    int id = await db.insert(PontoDB.tableName, ponto.toJson());
+    return id;
+  }
+
+  Future<Ponto> getPontoById(int _id) async {
+    Database db = await _databaseHelper.database;
+    List<Map> pontos = await db.query(PontoDB.tableName,
+        columns: [
+          PontoDB.id,
+          PontoDB.id_funcionario,
+          PontoDB.entrada,
+          PontoDB.saida,
+          PontoDB.fim
+        ],
+        where: '${PontoDB.id_funcionario} = ?',
+        whereArgs: [_id]);
+    if (pontos.length > 0) {
+      return Ponto.fromJson(pontos.first);
+    }
+    return null;
+  }
+
+  Future<List<Ponto>> getAllPonto() async {
+    Database db = await _databaseHelper.database;
+    List<Map> maps = await db.query(PontoDB.tableName);
+    if (maps.length > 0) {
+      List<Ponto> pontos = [];
+      maps.forEach((map) => pontos.add(Ponto.fromJson(map)));
+      return pontos;
+    }
+    return null;
+  }
+
+  Future<Ponto> getLastPonto() async {
+    Database db = await _databaseHelper.database;
+    List<Map> pontos = await db.query(PontoDB.tableName);
+    if (pontos.length > 0) {
+      return Ponto.fromJson(pontos.last);
+    }
+    return null;
+  }
+
+  Future<int> updatePonto(Ponto ponto) async {
+    Database db = await _databaseHelper.database;
+    return await db.update(
+      PontoDB.tableName, ponto.toJson(), where: "_id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [ponto.id],
+    );
+  }
+
+  Future<int> deleteAllPontos() async {
+    Database db = await _databaseHelper.database;
+    int id = await db.delete(PontoDB.tableName);
+    return id;
+  }
 }

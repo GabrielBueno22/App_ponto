@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobile/data/data_manager.dart';
 import 'package:flutter_mobile/routes.dart';
 import 'package:get_it/get_it.dart';
 
@@ -20,6 +21,7 @@ import 'navigation_service.dart';
 import 'util/app_localizations.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   GetIt getIt = GetIt.I;
   getIt.registerSingleton<LoginController>(LoginController());
   getIt.registerSingleton<ConsultarHorasController>(ConsultarHorasController());
@@ -38,6 +40,7 @@ void main() {
   getIt.registerSingleton<SplashController>(SplashController());
   getIt.registerSingleton<VisitaController>(VisitaController());
   getIt.registerSingleton<NavigationService>(NavigationService());
+  DataManager.instance.setLocation(-24.7841366, -49.9969496);
 
   /* 
    * Ir registrando as instancias abaixo os stores
@@ -54,10 +57,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Boilerplate',
-      theme: ThemeData(),
+      theme: ThemeData(
+          appBarTheme: AppBarTheme(
+        color: const Color(0xFFfa7d09),
+      )),
       // debugShowCheckedModeBanner: false,
       navigatorKey: GetIt.I<NavigationService>().navigatorKey,
-      initialRoute: Routes.login,
+      initialRoute: Routes.splash,
       onGenerateRoute: Routes.generateRoute,
       supportedLocales: [Locale('en', 'US'), Locale('pt', 'BR')],
       localizationsDelegates: [
