@@ -152,7 +152,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               ? Colors.white
                               : Colors.grey),
                     ),
-                    onPressed: null,
+                    onPressed: controller.valoresAlterados
+                        ? () {
+                            navigator.navigateTo('/tabBar');
+                          }
+                        : null,
                   ),
                 );
               }),

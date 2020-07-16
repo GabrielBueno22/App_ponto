@@ -7,6 +7,7 @@ import 'package:flutter_mobile/controller/ponto_controller.dart';
 import 'package:flutter_mobile/data/data_manager.dart';
 import 'package:flutter_mobile/data/model/Ponto.dart';
 import 'package:flutter_mobile/navigation_service.dart';
+import 'package:flutter_mobile/ui/widgets/text_form.dart';
 import 'package:flutter_mobile/ui/widgets/text_form_selector.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -78,7 +79,9 @@ class _PontoScreenState extends State<PontoScreen> {
                 onPressed: () {
                   widget.ponto.id == null
                       ? showAlertDialog(context)
-                      : showDialogSucces(context);
+                      : widget.ponto.isVisita
+                          ? showAlertDialogVisita(context)
+                          : showDialogSucces(context);
                 },
                 child: widget.ponto.id == null
                     ? Text(
@@ -124,6 +127,9 @@ class _PontoScreenState extends State<PontoScreen> {
                 id_funcionario: 1,
                 entrada: DateTime.now().toIso8601String(),
                 saida: null,
+                intervalo: null,
+                visita: null,
+                isVisita: controller.isVisita,
                 fim: false))
             .then((value) {
           if (value is int) {
@@ -133,11 +139,36 @@ class _PontoScreenState extends State<PontoScreen> {
         });
       },
     );
+
     //configura o AlertDialog
     AlertDialog alert = controller.distanciaEmpresa
         ? AlertDialog(
             title: Text("Ponto"),
-            content: Text("Deseja registrar sua entrada?"),
+            content: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.height * 0.7,
+              child: Column(
+                children: <Widget>[
+                  Text("Deseja registrar sua entrada?"),
+                  TextFormSelector(
+                    selections: [
+                      "Ponto",
+                      "Visita",
+                    ],
+                    onChanged: (value) {
+                      if (value == "Visita") {
+                        controller.setIsVisita(true);
+                      } else {
+                        controller.setIsVisita(false);
+                      }
+                    },
+                    text: "Tipo",
+                    initialValue: "Ponto",
+                    enabled: true,
+                  )
+                ],
+              ),
+            ),
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -191,6 +222,7 @@ class _PontoScreenState extends State<PontoScreen> {
       onPressed: () {
         Ponto p = widget.ponto;
         p.saida = DateTime.now().toIso8601String();
+        p.intervalo = controller.intervalo;
         p.fim = true;
         DataManager.instance.updatePonto(p).then((value) {
           if (value is int) {
@@ -221,7 +253,7 @@ class _PontoScreenState extends State<PontoScreen> {
                         "Fim de Expediente"
                       ],
                       onChanged: (value) {
-                        motivo = value;
+                        controller.setIntervalo(value);
                       },
                       text: "Motivo da saída",
                       initialValue: "Almoço",
@@ -270,5 +302,66 @@ class _PontoScreenState extends State<PontoScreen> {
     );
   }
 
-  showDialogArea() {}
+  showAlertDialogVisita(BuildContext context) {
+    Widget cancelaButton = FlatButton(
+      child: Text("Cancelar"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continuaButton = FlatButton(
+        child: Text("Cadastrar"),
+        onPressed: () {
+          Ponto p = widget.ponto;
+          p.saida = DateTime.now().toIso8601String();
+          p.intervalo = "Visita";
+          p.visita = controller.cliente;
+          p.fim = true;
+          DataManager.instance.updatePonto(p).then((value) {
+            if (value is int) {
+              print(value);
+              navigator.navigateTo("/tabBar");
+            } else {}
+          });
+        });
+    //configura o AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Visita"),
+      content: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.3,
+          width: MediaQuery.of(context).size.height * 0.7,
+          child: Column(
+            children: <Widget>[
+              Text("Deseja terminar sua visita nesse endereço?"),
+              WidgetTextForm(
+                  value: "",
+                  text: "Cliente",
+                  icon: null,
+                  onChanged: controller.setCliente,
+                  enabled: true,
+                  numero: false,
+                  error: null),
+            ],
+          ),
+        ),
+      ),
+      elevation: 10,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      actions: [
+        cancelaButton,
+        continuaButton,
+      ],
+      backgroundColor: Colors.white,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

@@ -46,6 +46,9 @@ class PontoDB {
   static String id_funcionario = 'id_funcionario';
   static String entrada = 'entrada';
   static String saida = 'saida';
+  static String intervalo = 'intervalo';
+  static String visita = 'visita';
+  static String isVisita = 'isVisita';
   static String fim = 'fim';
 
   static String createTable() {
@@ -54,6 +57,9 @@ class PontoDB {
                 $id_funcionario INTEGER NOT NULL,
                 $entrada TEXT NOT NULL,
                 $saida TEXT,
+                $intervalo TEXT,
+                $visita TEXT,
+                $isVisita INTEGER NOT NULL,
                 $fim INTEGER NOT NULL
               )''';
   }

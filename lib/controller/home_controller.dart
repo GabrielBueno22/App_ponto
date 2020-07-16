@@ -46,6 +46,9 @@ abstract class _HomeControllerBase with Store {
           print("VAZIA");
         }
         return true;
+      } else if (value == null) {
+        setHomeState(HomeState.EMPTY);
+        print("VAZIA");
       } else {
         setHomeState(HomeState.ERROR);
         print("ERRO");
@@ -74,15 +77,22 @@ abstract class _HomeControllerBase with Store {
     Ponto p;
     for (p in listPontosDia) {
       if (p.fim) {
-        min +=
-            DateTime.parse(p.saida).minute - DateTime.parse(p.entrada).minute;
+        min += DateTime.parse(p.saida)
+            .toUtc()
+            .difference(DateTime.parse(p.entrada).toUtc())
+            .inMinutes;
       } else {
-        min += DateTime.now().minute - DateTime.parse(p.entrada).minute;
+        min += DateTime.now()
+            .toUtc()
+            .difference(DateTime.parse(p.entrada).toUtc())
+            .inMinutes;
       }
     }
+    print(min);
     hour = (min / 60).floor();
     min = min - hour * 60;
     hs = hour.toString();
+    print("Horas: " + hs);
     ms = min.toString();
     if (hour < 10) {
       hs = "0" + hour.toString();

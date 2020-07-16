@@ -159,6 +159,9 @@ class DataManager {
           PontoDB.id_funcionario,
           PontoDB.entrada,
           PontoDB.saida,
+          PontoDB.intervalo,
+          PontoDB.visita,
+          PontoDB.isVisita,
           PontoDB.fim
         ],
         where: '${PontoDB.id_funcionario} = ?',

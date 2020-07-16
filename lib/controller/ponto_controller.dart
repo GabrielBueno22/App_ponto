@@ -18,6 +18,25 @@ abstract class _PontoControllerBase with Store {
   Completer<GoogleMapController> controllerMapVisita = Completer();
   @observable
   double distance = 0;
+  @observable
+  bool isVisita = false;
+  @observable
+  String intervalo = "Intervalo";
+  @observable
+  String cliente;
+  @observable
+  String descricao;
+
+  @action
+  setIsVisita(bool b) => isVisita = b;
+  @action
+  setIntervalo(String s) => intervalo = s;
+
+  @action
+  setCliente(String s) => cliente = s;
+
+  @action
+  setDescricao(String s) => cliente = s;
 
   var location = new Location();
   @observable
@@ -41,7 +60,7 @@ abstract class _PontoControllerBase with Store {
     controllerMap.future.then((value) {
       value.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
           target: LatLng(userLocation.latitude, userLocation.longitude),
-          zoom: 18.00)));
+          zoom: 16.00)));
     });
     distance = await Geolocator().distanceBetween(userLocation.latitude,
         userLocation.longitude, -24.7841366, -49.9969496);
@@ -54,7 +73,7 @@ abstract class _PontoControllerBase with Store {
     controllerMapVisita.future.then((value) {
       value.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
           target: LatLng(userLocation.latitude, userLocation.longitude),
-          zoom: 18.00)));
+          zoom: 16.00)));
     });
   }
 

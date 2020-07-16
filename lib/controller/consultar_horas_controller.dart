@@ -1,5 +1,6 @@
 import 'package:flutter_mobile/data/data_manager.dart';
 import 'package:flutter_mobile/data/model/Ponto.dart';
+import 'package:flutter_mobile/util/stringUtil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 part 'consultar_horas_controller.g.dart';
@@ -135,7 +136,35 @@ abstract class _ConsultarHorasControllerBase with Store {
     return hs + ":" + ms;
   }
 
-  saldo() {}
+  String saldo(String horas) {
+    List<String> list = List();
+    list = StringUtil.convertHour(horas);
+
+    int h = int.parse(list[0]);
+    int min = int.parse(list[1]);
+    int result = 0;
+    if (isDia) {
+      result = (8 * 60) - ((h * 60) + min);
+    }
+    if (isSemana) {
+      result = (40 * 60) - ((h * 60) + min);
+    }
+    if (isMes) {
+      result = (160 * 60) - ((h * 60) + min);
+    }
+    h = (result / 60).floor();
+    min = result - (h * 60);
+    list = List();
+    list.add(h.toString());
+    list.add(min.toString());
+    if (h < 10) {
+      list[0] = "0" + h.toString();
+    }
+    if (min < 10) {
+      list[1] = "0" + min.toString();
+    }
+    return list[0] + ":" + list[1];
+  }
 
   @computed
   bool get isDia {

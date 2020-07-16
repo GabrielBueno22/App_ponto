@@ -13,7 +13,7 @@ abstract class _MenuControllerBase with Store {
     Opcao("Jornada de trabalho", Icon(Icons.list), "/jornada"),
     Opcao("Feriados", Icon(Icons.beach_access), "/feriados"),
     Opcao("Sincronizar", Icon(Icons.sync), "/sincronizar"),
-    Opcao("Visita", Icon(Icons.directions_car), "/visita"),
+    //Opcao("Visita", Icon(Icons.directions_car), "/visita"),
     Opcao("Sair", Icon(Icons.input), "/sair")
   ];
 }

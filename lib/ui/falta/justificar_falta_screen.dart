@@ -181,7 +181,11 @@ class _JustificarFaltaScreenState extends State<JustificarFaltaScreen> {
                               ? Colors.white
                               : Colors.grey),
                     ),
-                    onPressed: null,
+                    onPressed: controller.validarValores
+                        ? () {
+                            navigator.navigateTo('/tabBar');
+                          }
+                        : null,
                   ),
                 );
               }),

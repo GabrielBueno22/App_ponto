@@ -10,7 +10,7 @@ class DatabaseHelper {
   // Arquivo do DB.
   static final _databaseName = "appdatabase.db";
   // Incrementar para alterar a versão do 'schema'.
-  static final _databaseVersion = 2;
+  static final _databaseVersion = 3;
 
   // Singleton
   DatabaseHelper._privateConstructor();

@@ -151,4 +151,9 @@ class StringUtil {
   static DateTime previousDay(DateTime current) {
     return current.subtract(new Duration(days: 1));
   }
+
+  static List<String> convertHour(String hour) {
+    List<String> list = hour.split(":");
+    return list;
+  }
 }

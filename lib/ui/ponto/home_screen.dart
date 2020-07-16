@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     break;
                   case HomeState.SUCCESS:
                     return Container(
-                      padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                      padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
                       height: MediaQuery.of(context).size.height * 0.545,
                       decoration: BoxDecoration(color: Colors.white),
                       child: Observer(builder: (_) {
@@ -207,13 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? saida = DateTime.parse(
                                       controller.listPontosDia[index].saida)
                                   : saida = DateTime.now();
-                              List<String> intervalos = [
-                                "Almoço",
-                                "Intervalo",
-                                "Jantar",
-                              ];
-                              intervalos.shuffle();
-
                               return Column(
                                 children: <Widget>[
                                   Container(
@@ -232,75 +225,76 @@ class _HomeScreenState extends State<HomeScreen> {
                                               blurRadius: 1,
                                               offset: Offset(0, 0))
                                         ]),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Text(
-                                                "Entrada: " +
-                                                    StringUtil.convertTime(
-                                                        entrada),
-                                                style: TextStyle(
-                                                    color: Colors.orange),
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ),
-                                            controller.listPontosDia[index].fim
-                                                ? Container(
-                                                    child: Text(
-                                                      "Saída: " +
-                                                          StringUtil
-                                                              .convertTime(
-                                                                  saida),
-                                                      style: TextStyle(
-                                                          color: Colors.orange),
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                      "Saída:",
-                                                      style: TextStyle(
-                                                          color: Colors.orange),
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                    ),
-                                                  ),
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Total: " +
-                                                    StringUtil.compare(
-                                                        saida, entrada),
-                                                style: TextStyle(
-                                                    color: ColorUtil.darkGrey),
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            )
-                                          ],
+                                        Container(
+                                          alignment: Alignment.topCenter,
+                                          child: Text(
+                                            controller.listPontosDia[index]
+                                                    .isVisita
+                                                ? "VISITA"
+                                                : "PONTO",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15),
+                                          ),
                                         ),
+                                        Container(
+                                          child: Text(
+                                            "Entrada: " +
+                                                StringUtil.convertTime(entrada),
+                                            style:
+                                                TextStyle(color: Colors.orange),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ),
+                                        controller.listPontosDia[index].fim
+                                            ? Container(
+                                                child: Text(
+                                                  "Saída: " +
+                                                      StringUtil.convertTime(
+                                                          saida),
+                                                  style: TextStyle(
+                                                      color: Colors.orange),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              )
+                                            : Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  "Saída:",
+                                                  style: TextStyle(
+                                                      color: Colors.orange),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Total: " +
+                                                StringUtil.compare(
+                                                    saida, entrada),
+                                            style: TextStyle(
+                                                color: ColorUtil.darkGrey),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                                    child: Text(
-                                        index ==
-                                                controller
-                                                        .listPontosDia.length -
-                                                    1
-                                            ? "Fim de expediente"
-                                            : intervalos[0],
-                                        style: TextStyle(color: Colors.grey)),
-                                  )
+                                  controller.listPontosDia[index].fim
+                                      ? Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 3, 0, 3),
+                                          child: Text(
+                                              controller.listPontosDia[index]
+                                                  .intervalo,
+                                              style: TextStyle(
+                                                  color: Colors.grey)),
+                                        )
+                                      : Container(),
                                 ],
                               );
                             });

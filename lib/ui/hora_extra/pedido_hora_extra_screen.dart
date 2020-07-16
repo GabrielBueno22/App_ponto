@@ -160,7 +160,11 @@ class _PedidoHoraExtraScreenState extends State<PedidoHoraExtraScreen> {
                       : Colors.grey[600],
                 ),
                 child: FlatButton(
-                    onPressed: controller.canSave ? () {} : null,
+                    onPressed: controller.canSave
+                        ? () {
+                            navigator.navigateTo("/tabBar");
+                          }
+                        : null,
                     child: Text("Salvar",
                         style: TextStyle(
                           color: controller.canSave

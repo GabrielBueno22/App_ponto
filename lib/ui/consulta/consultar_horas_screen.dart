@@ -270,14 +270,19 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                                     MediaQuery.of(context).size.height * 0.015,
                                 color: Colors.white),
                           )),
-                          Container(
-                              child: Text(
-                            "00:00",
-                            style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.025,
-                                color: Colors.white),
-                          )),
+                          Container(child: Observer(builder: (_) {
+                            return Text(
+                              controller.isDia
+                                  ? controller
+                                      .saldo(controller.horasTrabalhadas())
+                                  : controller
+                                      .saldo(controller.horasTrabalhadasMes()),
+                              style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.025,
+                                  color: Colors.white),
+                            );
+                          })),
                         ],
                       ),
                     ],
@@ -293,7 +298,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                   if (controller.pontosDia.length > 0) {
                     return Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      height: MediaQuery.of(context).size.height * 0.528,
+                      height: MediaQuery.of(context).size.height * 0.52,
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -332,6 +337,17 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          controller.pontosDia[index].isVisita
+                                              ? "VISITA"
+                                              : "PONTO",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15),
+                                        ),
+                                      ),
                                       Container(
                                         child: Text(
                                           "Entrada: " +
@@ -381,7 +397,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                     );
                   } else {
                     return Container(
-                        height: MediaQuery.of(context).size.height * 0.528,
+                        height: MediaQuery.of(context).size.height * 0.52,
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -404,7 +420,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                   if (controller.pontosMes.length > 0) {
                     return Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                      height: MediaQuery.of(context).size.height * 0.528,
+                      height: MediaQuery.of(context).size.height * 0.52,
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -443,6 +459,17 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          controller.pontosDia[index].isVisita
+                                              ? "VISITA"
+                                              : "PONTO",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15),
+                                        ),
+                                      ),
                                       Container(
                                         child: Text(
                                           "Entrada: " +
@@ -492,7 +519,7 @@ class _ConsultarHorasScreenState extends State<ConsultarHorasScreen> {
                     );
                   } else {
                     return Container(
-                        height: MediaQuery.of(context).size.height * 0.528,
+                        height: MediaQuery.of(context).size.height * 0.52,
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
